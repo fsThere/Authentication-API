@@ -4,6 +4,8 @@ require('dotenv').config();
 
 const app = express();
 const port = 3000;
+app.use(express.json());
+
 
 const dbHost = process.env.DB_HOST;
 const dbUser = process.env.DB_USER;
@@ -16,18 +18,6 @@ const conn = mysql.createConnection({
     database: 'myUsers'
 })
 
-
-conn.query(
-    'SELECT * FROM users',
-    function(err, results, fields) {
-      if (err) throw err;
-      console.log(results);
-    }
-);
-
-
-
-app.use(express.json());
 
 
 app.post('/api/register', (req, res) => {
