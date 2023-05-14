@@ -21,7 +21,7 @@ const conn = mysql.createConnection({
 
 
 app.post('/api/register', (req, res) => {
-  const { name, password, hwid, license } = req.body;
+  const { name, password, license } = req.body;
 
   const userQuery = `INSERT INTO users (name, password, registerDate, licenseId) 
                      VALUES (?, ?, ?, ?, ?)`;
