@@ -29,7 +29,9 @@ app.post('/api/register', (req, res) => {
                         WHERE license = ? AND Expiry >= NOW()`;
 
   conn.query(licenseQuery, [license], (err, licenseResults, fields) => {
-    if (err) throw err;
+    if (err){
+        console.log(err);
+    }
 
     if (licenseResults.length > 0) {
       const licenseId = licenseResults[0].licenseId;
@@ -62,7 +64,9 @@ app.post('/api/login', (req,res) =>{
     const query = `SELECT * FROM users WHERE name = ? AND password = ?`;
 
     conn.query(query, [username, password], (err, results, fields) => {
-      if (err) throw err;
+      if (err){
+        console.log(err);
+        }
   
       if (results.length === 0) {
         res.status(401).send('Invalid username or password');
