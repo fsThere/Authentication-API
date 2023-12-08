@@ -39,10 +39,16 @@ app.post('/api/register', (req, res) => {
 
       if (!used) {
         conn.query(userQuery, [name, password, new Date(), licenseId], (err, userResults, fields) => {
-          if (err) throw err;
+            if (err)
+            {
+                res.status(401).send(err)
+            }
 
           conn.query(`UPDATE licenses SET used = true WHERE licenseId = ?`, [licenseId], (err, results, fields) => {
-            if (err) throw err;
+            if (err)
+            {
+                res.status(401).send(err)
+            }
 
             res.status(200).send("Register Success!");
           });
@@ -64,9 +70,10 @@ app.post('/api/login', (req,res) =>{
     const query = `SELECT * FROM users WHERE name = ? AND password = ?`;
 
     conn.query(query, [username, password], (err, results, fields) => {
-      if (err){
-        console.log(err);
-        }
+            if (err)
+            {
+                console.log(`An error occured {err}`)
+            }
   
       if (results.length === 0) {
         res.status(401).send('Invalid username or password');
